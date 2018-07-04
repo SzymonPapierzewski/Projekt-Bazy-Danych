@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="najmniejProduktowWHurtowniach" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2aba76f-e923-45ca-bfd9-9bc5721af961">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select dp.hurtownia_id_hurtowni as "ID Hurtowni",
+pr.id_produktu as "ID Produktu",
+pr.NAZWA_PODUKTU as "Nazwa Produktu",
+dp.DOSTEPNA_ILOSC as "Dostepna Ilosc"
+from Dostepne_produkty dp inner join Produkt pr
+on dp.produkt_id_produktu = pr.id_produktu
+order by dp.DOSTEPNA_ILOSC]]>
+	</queryString>
+	<field name="ID Hurtowni" class="java.lang.String"/>
+	<field name="ID Produktu" class="java.math.BigDecimal"/>
+	<field name="Nazwa Produktu" class="java.lang.String"/>
+	<field name="Dostepna Ilosc" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="142" height="66" uuid="a2636672-988c-4fa1-a019-bbbb0bc59d4c"/>
+				<imageExpression><![CDATA["C:\\Users\\Piotr\\Desktop\\Raporty\\logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="178" y="0" width="290" height="48" uuid="6b1b074a-9b0a-4d74-9843-c211d2a5e088"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Najmniejsza liczba produktów w hurtowniach w dniu]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="468" y="0" width="100" height="20" uuid="c7a3734d-2a75-4329-af3e-2995c29bc723"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="66" height="20" uuid="9d7e5b57-58c8-471a-876f-813234190556"/>
+				<text><![CDATA[ID Hurtowni]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="41" width="100" height="20" uuid="1bdac527-5ffa-4306-8ea2-d8b64df3d5c1"/>
+				<text><![CDATA[ID Produktu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="41" width="237" height="20" uuid="61015ee9-3a05-4bc4-8f84-ede3dfa45694"/>
+				<text><![CDATA[Nazwa Produktu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="41" width="152" height="20" uuid="c09ae528-ea22-443a-aa48-7db71d1e0b09"/>
+				<text><![CDATA[Dostepna Ilosc]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="60" width="555" height="1" uuid="2fde84c2-e554-4fdc-9f29-2a45cfbd3b8b"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="45" backcolor="#CCCCCC" uuid="7607a1b4-cc33-4f09-97cd-34dda2a98c5d">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="66" height="45" uuid="b4c1db97-c581-41aa-8852-2195e98e6d6a"/>
+				<textFieldExpression><![CDATA[$F{ID Hurtowni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="66" y="0" width="100" height="45" uuid="6e324d4c-a9a5-4a12-bcf1-c025362488a9"/>
+				<textFieldExpression><![CDATA[$F{ID Produktu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="0" width="237" height="45" uuid="203a23c1-1558-4911-b5d5-4b0cbf99eea3"/>
+				<textFieldExpression><![CDATA[$F{Nazwa Produktu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="0" width="152" height="45" uuid="f477ac40-7018-4d8c-8e22-2ebee4e46bec"/>
+				<textFieldExpression><![CDATA[$F{Dostepna Ilosc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

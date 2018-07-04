@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="zestawienieWydatkowKlientow" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0c5c382-db59-45f2-a5ca-932a920222a0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="21"/>
+	<queryString language="SQL">
+		<![CDATA[select distinct Klient.nazwisko as "Nazwisko klienta",
+sum(Faktura.suma_do_zaplaty) as "Wydatki"
+from Klient, Faktura
+where Klient.ID_KLIENTA = Faktura.klient_id_klienta
+group by Klient.nazwisko
+order by sum(Faktura.suma_do_zaplaty)desc]]>
+	</queryString>
+	<field name="Nazwisko klienta" class="java.lang.String"/>
+	<field name="Wydatki" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="135" height="79" uuid="6880d150-06f4-427c-9b2f-66001494847d"/>
+				<imageExpression><![CDATA["C:\\Users\\Piotr\\Desktop\\Raporty\\logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="180" y="0" width="271" height="39" uuid="b3e1fae9-950c-466e-9685-32478fbf91d3"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zestawienie wydatków klientów z dnia]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="455" y="0" width="100" height="20" uuid="dc1a499a-d258-4fde-97b8-3ca69c952551"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="326" height="20" uuid="31828863-6c36-4281-9e10-d8f05023015f"/>
+				<text><![CDATA[Nazwisko klienta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="41" width="229" height="20" uuid="9a3c3be1-cfe2-403c-bfb6-1af993274b6e"/>
+				<text><![CDATA[Wydatki]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="59" width="552" height="1" uuid="8a029ad1-50b0-42ba-acdc-d8e3f2ea3d69"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="45" backcolor="#CCCCCC" uuid="3674bd56-41af-4a8a-8009-1efb5370b7ca">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="326" height="45" uuid="c6577422-e356-4d90-9aa5-6becd9331987"/>
+				<textFieldExpression><![CDATA[$F{Nazwisko klienta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="0" width="229" height="45" uuid="188723ac-1c84-414c-acca-ec336a6fa73d"/>
+				<textFieldExpression><![CDATA[$F{Wydatki}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

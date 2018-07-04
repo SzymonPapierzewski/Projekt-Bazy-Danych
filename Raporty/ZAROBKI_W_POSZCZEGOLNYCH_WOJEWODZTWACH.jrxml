@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZAROBKI_W_POSZCZEGOLNYCH_WOJEWODZTWACH" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ce0e549-f747-4ec9-be10-ab053d956d7a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select distinct Wojewodztwo.nazwa_wojewodztwa as "Wojewodztwo",
+sum(Faktura.suma_do_zaplaty) as "Przychod z wojewodztwa"
+from Wojewodztwo ,Klient,Faktura
+where
+Wojewodztwo.id_wojewodztwa = Klient.wojewodztwo_id_wojewodztwa
+and Klient.id_klienta = Faktura.klient_id_klienta
+group by Wojewodztwo.nazwa_wojewodztwa
+order by sum(Faktura.suma_do_zaplaty)desc]]>
+	</queryString>
+	<field name="Wojewodztwo" class="java.lang.String"/>
+	<field name="Przychod z wojewodztwa" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="162" height="65" uuid="ccd855ca-94e0-450b-ae56-1b1c6e8391bd"/>
+				<imageExpression><![CDATA["C:\\Users\\Piotr\\Desktop\\Raporty\\logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="186" y="0" width="285" height="52" uuid="bf2a25d4-e036-4f01-98e2-1d005159d219"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zarobki w poszczególnych województwach z dnia]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="471" y="0" width="100" height="20" uuid="3f3eb971-b659-4e8d-9aeb-6fdd443ddae3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="385" height="20" uuid="0d1e7612-1dd5-4fa9-aaae-e56ebcc3d46d"/>
+				<text><![CDATA[Województwo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="41" width="169" height="20" uuid="26962d56-d618-485f-a47d-91eef2b44c72"/>
+				<text><![CDATA[Przychód z województwa]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="58" width="555" height="1" uuid="826c8919-b934-4a95-b250-9c2a799163c6"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="45" backcolor="#CCCCCC" uuid="e260cd2a-01e6-4123-8067-371bf0248eae">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.intValue() % 2 == 0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="386" height="45" uuid="44e2c200-b088-41da-b75a-a5f6e6f0598a"/>
+				<textFieldExpression><![CDATA[$F{Wojewodztwo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="0" width="169" height="45" uuid="9e4ce740-1a7f-48f4-9be8-3d26ccc7d08a"/>
+				<textFieldExpression><![CDATA[$F{Przychod z wojewodztwa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
